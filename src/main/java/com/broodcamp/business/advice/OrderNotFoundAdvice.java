@@ -5,17 +5,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.broodcamp.business.exception.EmployeeNotFoundException;
+import com.broodcamp.business.exception.OrderNotFoundException;
 
 /**
  * @author Edward P. Legaspi
  */
 @RestControllerAdvice
-public class EmployeeNotFoundAdvice {
+public class OrderNotFoundAdvice {
 
-	@ExceptionHandler(EmployeeNotFoundException.class)
+	@ExceptionHandler(OrderNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String employeeNotFoundHandler(EmployeeNotFoundException ex) {
+	String orderNotFoundHandler(OrderNotFoundException ex) {
 		return ex.getMessage();
 	}
 }
