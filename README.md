@@ -9,3 +9,4 @@ After installation run STS.exe -clean.
 ### References
 
  - https://spring.io/guides/tutorials/bookmarks/
+ - https://projectlombok.org/
