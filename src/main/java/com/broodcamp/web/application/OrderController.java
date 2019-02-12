@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.broodcamp.business.exception.OrderNotFoundException;
@@ -30,6 +31,7 @@ import com.broodcamp.web.assembler.OrderResourceAssembler;
  * @author Edward P. Legaspi
  */
 @RestController
+@RequestMapping("/api")
 public class OrderController {
 
 	private final OrderRepository orderRepository;
@@ -44,8 +46,7 @@ public class OrderController {
 	@GetMapping("/orders")
 	public Resources<Resource<Order>> all() {
 
-		List<Resource<Order>> orders = orderRepository.findAll().stream().map(assembler::toResource)
-				.collect(Collectors.toList());
+		List<Resource<Order>> orders = orderRepository.findAll().stream().map(assembler::toResource).collect(Collectors.toList());
 
 		return new Resources<>(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
 	}
@@ -61,8 +62,7 @@ public class OrderController {
 		order.setStatus(Status.IN_PROGRESS);
 		Order newOrder = orderRepository.save(order);
 
-		return ResponseEntity.created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri())
-				.body(assembler.toResource(newOrder));
+		return ResponseEntity.created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri()).body(assembler.toResource(newOrder));
 	}
 
 	@DeleteMapping("/orders/{id}/cancel")
@@ -75,8 +75,8 @@ public class OrderController {
 			return ResponseEntity.ok(assembler.toResource(orderRepository.save(order)));
 		}
 
-		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(new VndErrors.VndError("Method not allowed",
-				"You can't cancel an order that is in the " + order.getStatus() + " status"));
+		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+				.body(new VndErrors.VndError("Method not allowed", "You can't cancel an order that is in the " + order.getStatus() + " status"));
 	}
 
 	@PutMapping("/orders/{id}/complete")
@@ -89,8 +89,8 @@ public class OrderController {
 			return ResponseEntity.ok(assembler.toResource(orderRepository.save(order)));
 		}
 
-		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(new VndErrors.VndError("Method not allowed",
-				"You can't complete an order that is in the " + order.getStatus() + " status"));
+		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+				.body(new VndErrors.VndError("Method not allowed", "You can't complete an order that is in the " + order.getStatus() + " status"));
 	}
 
 }

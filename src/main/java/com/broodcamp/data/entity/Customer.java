@@ -1,5 +1,6 @@
 package com.broodcamp.data.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,28 +15,20 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "employee")
-public class Employee {
+@Table(name = "customer")
+public class Customer {
 
 	private @Id @GeneratedValue Long id;
-	private String firstName;
-	private String lastName;
-	private String role;
 
-	public Employee(String firstName, String lastName, String role) {
+	@Column(name = "firstname")
+	private String firstName;
+
+	@Column(name = "lastname")
+	private String lastName;
+
+	public Customer(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.role = role;
-	}
-
-	public String getName() {
-		return this.firstName + " " + this.lastName;
-	}
-
-	public void setName(String name) {
-		String[] parts = name.split(" ");
-		this.firstName = parts[0];
-		this.lastName = parts[1];
 	}
 
 }

@@ -14,18 +14,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Data
-@Table(name = "customer_order")
-public class Order {
-
+@Table(name = "product")
+public class Product {
 	private @Id @GeneratedValue Long id;
+	private String name;
 
-	private String description;
-	private Status status;
-
-	public Order(String description, Status status) {
-
-		this.description = description;
-		this.status = status;
+	public Product(String name) {
+		this.name = name;
 	}
-
 }

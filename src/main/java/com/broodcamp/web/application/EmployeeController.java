@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.broodcamp.business.exception.EmployeeNotFoundException;
@@ -28,6 +29,7 @@ import com.broodcamp.web.assembler.EmployeeResourceAssembler;
  * @author Edward P. Legaspi
  */
 @RestController
+@RequestMapping("/api")
 public class EmployeeController {
 
 	private final EmployeeRepository repository;
@@ -43,8 +45,7 @@ public class EmployeeController {
 	@GetMapping("/employees")
 	public Resources<Resource<Employee>> all() {
 
-		List<Resource<Employee>> employees = repository.findAll().stream().map(assembler::toResource)
-				.collect(Collectors.toList());
+		List<Resource<Employee>> employees = repository.findAll().stream().map(assembler::toResource).collect(Collectors.toList());
 
 		return new Resources<>(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
 	}
@@ -67,8 +68,7 @@ public class EmployeeController {
 	}
 
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id)
-			throws URISyntaxException {
+	public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) throws URISyntaxException {
 
 		Employee updatedEmployee = repository.findById(id).map(employee -> {
 			employee.setName(newEmployee.getName());
