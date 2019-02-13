@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +18,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "employee")
+@ApiModel(description = "Employee")
+@JsonFilter("EmployeeFilter")
 public class Employee {
 
 	private @Id @GeneratedValue Long id;

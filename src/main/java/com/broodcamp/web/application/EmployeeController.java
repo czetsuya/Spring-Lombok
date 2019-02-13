@@ -25,6 +25,9 @@ import com.broodcamp.data.entity.Employee;
 import com.broodcamp.data.repository.EmployeeRepository;
 import com.broodcamp.web.assembler.EmployeeResourceAssembler;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiResponse;
+
 /**
  * @author Edward P. Legaspi
  */
@@ -42,6 +45,8 @@ public class EmployeeController {
 
 	// Aggregate root
 
+	@ApiModelProperty(notes = "Get all employees")
+	@ApiResponse(message = "Returns all the employees", code = 200)
 	@GetMapping("/employees")
 	public Resources<Resource<Employee>> all() {
 
@@ -50,6 +55,7 @@ public class EmployeeController {
 		return new Resources<>(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
 	}
 
+	@ApiModelProperty(notes = "Create a new employee")
 	@PostMapping("/employees")
 	public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
 
@@ -59,6 +65,7 @@ public class EmployeeController {
 
 	// Single item
 
+	@ApiModelProperty(notes = "Get an employee with a given id")
 	@GetMapping("/employees/{id}")
 	public Resource<Employee> one(@PathVariable Long id) {
 
@@ -67,6 +74,7 @@ public class EmployeeController {
 		return assembler.toResource(employee);
 	}
 
+	@ApiModelProperty(notes = "Update an employee")
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) throws URISyntaxException {
 
@@ -84,6 +92,7 @@ public class EmployeeController {
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
+	@ApiModelProperty(notes = "Delete an employee with a given id")
 	@DeleteMapping("/employees/{id}")
 	public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 

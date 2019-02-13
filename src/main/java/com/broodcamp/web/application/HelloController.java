@@ -6,6 +6,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.broodcamp.data.entity.Employee;
+
 /**
  * @author Edward P. Legaspi
  */
@@ -18,6 +20,11 @@ public class HelloController {
 	@GetMapping(path = "/hello")
 	public String hello() {
 		return messageSource.getMessage("hello", null, LocaleContextHolder.getLocale());
+	}
+	
+	@GetMapping(path = "/hello/employee")
+	public Employee helloEmployee() {
+		return new Employee("edward", "lastname", "admin");
 	}
 
 }

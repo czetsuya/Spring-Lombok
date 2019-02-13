@@ -24,5 +24,4 @@ public class SpringLombokApplication {
 		localeResolver.setDefaultLocale(Locale.US);
 		return localeResolver;
 	}
-
 }
