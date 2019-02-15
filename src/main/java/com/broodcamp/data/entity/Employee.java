@@ -26,6 +26,7 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private String role;
+	private String officeAddress;
 
 	public Employee(String firstName, String lastName, String role) {
 		this.firstName = firstName;
