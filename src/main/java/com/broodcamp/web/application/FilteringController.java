@@ -7,7 +7,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.broodcamp.data.entity.Employee;
+import com.broodcamp.business.domain.EmployeeFilter;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -20,13 +20,13 @@ public class FilteringController {
 
 	@GetMapping("/filtering")
 	public MappingJacksonValue retrieveSomeBean() {
-		Employee employee = new Employee("edward", "legaspi", "admin");
+		EmployeeFilter EmployeeFilter = new EmployeeFilter("edward", "legaspi", "admin");
 
 		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("firstName", "lastName");
 
 		FilterProvider filters = new SimpleFilterProvider().addFilter("EmployeeFilter", filter);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(employee);
+		MappingJacksonValue mapping = new MappingJacksonValue(EmployeeFilter);
 
 		mapping.setFilters(filters);
 
@@ -35,13 +35,13 @@ public class FilteringController {
 
 	@GetMapping("/filtering-list")
 	public MappingJacksonValue retrieveListOfSomeBeans() {
-		List<Employee> employees = Arrays.asList(new Employee("edward", "legaspi", "admin"), new Employee("edward", "legaspi", "admin"));
+		List<EmployeeFilter> EmployeeFilters = Arrays.asList(new EmployeeFilter("edward", "legaspi", "admin"), new EmployeeFilter("edward", "legaspi", "admin"));
 
 		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("role", "lastName");
 
 		FilterProvider filters = new SimpleFilterProvider().addFilter("EmployeeFilter", filter);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(employees);
+		MappingJacksonValue mapping = new MappingJacksonValue(EmployeeFilters);
 
 		mapping.setFilters(filters);
 

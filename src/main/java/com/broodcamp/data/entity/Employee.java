@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "employee")
 @ApiModel(description = "Employee")
-@JsonFilter("EmployeeFilter")
 public class Employee {
 
 	private @Id @GeneratedValue Long id;
